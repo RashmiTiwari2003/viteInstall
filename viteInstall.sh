@@ -1,29 +1,23 @@
 #!/bin/bash
 read -p "Enter the Project Name: " projectName
-npm create vite@latest $projectName -- --template react
+npm create vite@latest $projectName -- --template react-ts
 cd $projectName
 npm install
 
 read -p "Install Tailwind? (y/n) " tailwind
 if [[ "$tailwind" == "y" ]]
 then
-	npm install -D tailwindcss postcss autoprefixer
-	npx tailwind init -p
+  npm install tailwindcss @tailwindcss/vite
 
-	echo "export default {
-  content: [
-    \"./index.html\",
-    \"./src/**/*.{js,ts,jsx,tsx}\",
-  ],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-}" > tailwind.config.js
+	echo "import { defineConfig } from 'vite'
+  import tailwindcss from '@tailwindcss/vite'
+  export default defineConfig({
+    plugins: [
+      tailwindcss(),
+    ],
+  })" > vite.config.ts
 
-echo " @tailwind base;
-@tailwind components;
-@tailwind utilities;" > ./src/index.css
+echo "@import "tailwindcss";" > ./src/index.css
 fi
 
 cd ./public
@@ -41,7 +35,7 @@ const App = () => {
   )
 }
 
-export default App" > App.jsx
+export default App" > App.tsx
 
 read -p "Open in VS Code? (y/n) " vs
 if [[ "$vs" == "y" ]]
