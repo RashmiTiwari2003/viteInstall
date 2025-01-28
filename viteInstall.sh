@@ -10,14 +10,14 @@ then
   npm install tailwindcss @tailwindcss/vite
 
 	echo "import { defineConfig } from 'vite'
+  import react from '@vitejs/plugin-react'
   import tailwindcss from '@tailwindcss/vite'
+
   export default defineConfig({
-    plugins: [
-      tailwindcss(),
-    ],
+    plugins: [react(),tailwindcss(),],
   })" > vite.config.ts
 
-echo "@import "tailwindcss";" > ./src/index.css
+echo "@import 'tailwindcss';" > ./src/index.css
 fi
 
 cd ./public
